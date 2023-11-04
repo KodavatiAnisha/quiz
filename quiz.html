@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .container {
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .question {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz App</h1>
+        <div class="question">
+            <p id="questionText">Question 1: What is the capital of France?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="paris"> Paris</label>
+                <label><input type="radio" name="q1" value="london"> London</label>
+                <label><input type="radio" name="q1" value="berlin"> Berlin</label>
+            </div>
+        </div>
+
+        <button id="nextButton">Next</button>
+        <div id="result" style="display: none;">
+            <p>Total Score: <span id="score">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let currentQuestion = 1;
+            let score = 0;
+
+            const questionText = document.getElementById("questionText");
+            const nextButton = document.getElementById("nextButton");
+            const result = document.getElementById("result");
+            const scoreDisplay = document.getElementById("score");
+
+            nextButton.addEventListener("click", () => {
+                const selectedOption = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+                if (selectedOption) {
+                    if (currentQuestion === 1 && selectedOption.value === "paris") {
+                        score++;
+                    }
+                    if (currentQuestion === 2 && selectedOption.value === "8") {
+                        score++;
+                    }
+                    if (currentQuestion === 3 && selectedOption.value === "blue whale") {
+                        score++;
+                    }
+
+                    currentQuestion++;
+
+                    if (currentQuestion <= 3) {
+                        if (currentQuestion === 1) {
+                            questionText.textContent = "Question 1: What is the capital of France?";
+                            document.querySelector(".options").innerHTML = `
+                                <label><input type="radio" name="q1" value="paris"> Paris</label>
+                                <label><input type="radio" name="q1" value="london"> London</label>
+                                <label><input type="radio" name="q1" value="berlin"> Berlin</label>
+                            `;
+                        } else if (currentQuestion === 2) {
+                            questionText.textContent = "Question 2: How many planets are there in the solar system?";
+                            document.querySelector(".options").innerHTML = `
+                                <label><input type="radio" name="q2" value="7"> 7</label>
+                                <label><input type="radio" name="q2" value="8"> 8</label>
+                                <label><input type="radio" name="q2" value="9"> 9</label>
+                            `;
+                        } else if (currentQuestion === 3) {
+                            questionText.textContent = "Question 3: What is the largest mammal in the world?";
+                            document.querySelector(".options").innerHTML = `
+                                <label><input type="radio" name="q3" value="elephant"> Elephant</label>
+                                <label><input type="radio" name="q3" value="giraffe"> Giraffe</label>
+                                <label><input type="radio" name="q3" value="blue whale"> Blue Whale</label>
+                            `;
+                        }
+                    } else {
+                        // All questions are done
+                        questionText.style.display = "none";
+                        document.querySelector(".options").style.display = "none";
+                        result.style.display = "block";
+                        scoreDisplay.textContent = score;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
